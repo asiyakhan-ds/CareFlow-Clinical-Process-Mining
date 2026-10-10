@@ -1,0 +1,19 @@
+Patient_ID,Case_ID,Activity,Timestamp,Department,Resource,Cost
+P-101,C-1001,Triage,2026-10-01 08:30:00,Emergency,Nurse_01,50.00
+P-101,C-1001,Consultation,2026-10-01 09:15:00,General Medicine,Doc_12,150.00
+P-101,C-1001,Blood Test,2026-10-01 10:00:00,Pathology,Tech_05,80.00
+P-101,C-1001,X-Ray,2026-10-01 11:30:00,Radiology,Tech_08,200.00
+P-101,C-1001,Discharge,2026-10-01 14:00:00,Outpatient,Admin_02,30.00
+P-102,C-1002,Triage,2026-10-01 09:00:00,Emergency,Nurse_03,50.00
+P-102,C-1002,Consultation,2026-10-01 09:45:00,General Medicine,Doc_15,150.00
+P-102,C-1002,MRI Scan,2026-10-01 11:00:00,Radiology,Tech_08,500.00
+P-102,C-1002,Admission,2026-10-01 13:00:00,Inpatient,Admin_01,300.00
+P-102,C-1002,Surgery,2026-10-02 08:00:00,Surgical Ward,Doc_04,1500.00
+P-102,C-1002,Discharge,2026-10-04 10:00:00,Inpatient,Admin_02,30.00
+P-103,C-1003,Triage,2026-10-01 10:15:00,Emergency,Nurse_01,50.00
+P-103,C-1003,Consultation,2026-10-01 11:00:00,General Medicine,Doc_12,150.00
+P-103,C-1003,Discharge,2026-10-01 12:30:00,Outpatient,Admin_02,30.00
+P-104,C-1004,Triage,2026-10-01 11:00:00,Emergency,Nurse_02,50.00
+P-104,C-1004,ECG,2026-10-01 11:45:00,Cardiology,Tech_02,120.00
+P-104,C-1004,Consultation,2026-10-01 12:30:00,Cardiology,Doc_09,200.00
+P-104,C-1004,Discharge,2026-10-01 15:00:00,Outpatient,Admin_01,30.00
