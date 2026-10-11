@@ -74,7 +74,7 @@ No real patient records or personally identifiable health information are used.
 | Team Member | 
 |---|
 | Ranganath TY |
-|  |
+| Dhruv Shridhar |
 |  |
 |  |
 
