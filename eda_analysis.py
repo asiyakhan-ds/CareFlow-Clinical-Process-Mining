@@ -36,3 +36,10 @@ if __name__ == "__main__":
     if df is not None:
         inspect_dataset(df)
         check_missing_values(df)
+summary_statistics(df)
+
+def summary_statistics(df):
+    """Generate summary statistics for numerical columns."""
+    print("\n--- Summary Statistics ---")
+    print(df.describe())
+    return df.describe()
