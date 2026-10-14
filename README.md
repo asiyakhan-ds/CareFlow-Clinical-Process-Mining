@@ -71,12 +71,12 @@ This project uses synthetic/mock healthcare data for educational and portfolio p
 
 No real patient records or personally identifiable health information are used.
 
-| Team Member | 
-|---|
-| Ranganath TY |
-|  |
-|  |
-|  |
+| Team Member    | 
+|     ----       |
+| Ranganath TY   |
+| Dhruv Shridhar |
+| Ananyashree    |
+| Asiya Khan     |
 
 ## Project Status
 
@@ -84,9 +84,9 @@ No real patient records or personally identifiable health information are used.
 
 * [x] Project structure
 * [x] Git repository
-* [ ] Synthetic EHR event generator
-* [ ] Raw event dataset
-* [ ] BigQuery setup
+* [x] Synthetic EHR event generator
+* [x] Raw event dataset
+* [x] BigQuery setup
 
 ### Week 2
 
