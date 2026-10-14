@@ -71,12 +71,12 @@ This project uses synthetic/mock healthcare data for educational and portfolio p
 
 No real patient records or personally identifiable health information are used.
 
-| Team Member | 
-|---|
-| Ranganath TY |
+| Team Member    | 
+|     ----       |
+| Ranganath TY   |
 | Dhruv Shridhar |
-| Ananyashree |
-|  |
+| Ananyashree    |
+| Asiya Khan     |
 
 ## Project Status
 
