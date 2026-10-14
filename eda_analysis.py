@@ -36,10 +36,18 @@ if __name__ == "__main__":
     if df is not None:
         inspect_dataset(df)
         check_missing_values(df)
-summary_statistics(df)
+        summary_statistics(df)
+        check_duplicates(df)
 
 def summary_statistics(df):
     """Generate summary statistics for numerical columns."""
     print("\n--- Summary Statistics ---")
     print(df.describe())
     return df.describe()
+
+def check_duplicates(df):
+    """Check and display duplicate rows in the dataset."""
+    duplicates = df.duplicated().sum()
+    print(f"\n--- Duplicate Rows ---")
+    print(f"Total duplicate rows: {duplicates}")
+    return duplicates
