@@ -84,9 +84,9 @@ No real patient records or personally identifiable health information are used.
 
 * [x] Project structure
 * [x] Git repository
-* [ ] Synthetic EHR event generator
-* [ ] Raw event dataset
-* [ ] BigQuery setup
+* [x] Synthetic EHR event generator
+* [x] Raw event dataset
+* [x] BigQuery setup
 
 ### Week 2
 
