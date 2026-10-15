@@ -51,3 +51,39 @@ def check_duplicates(df):
     print(f"\n--- Duplicate Rows ---")
     print(f"Total duplicate rows: {duplicates}")
     return duplicates
+
+    def prepare_event_log_schema(df, case_col='patient_id', activity_col='activity_name', timestamp_col='timestamp'):
+    """
+    Standardizes the dataset columns into process mining event log schema:
+    - case_id: Unique trace identifier for patient journey
+    - activity: Standardized event name
+    - timestamp: Datetime format for temporal ordering
+    """
+    event_log = df.copy()
+    
+    # Map raw columns to standardized schema
+    column_mapping = {
+        case_col: 'case_id',
+        activity_col: 'activity',
+        timestamp_col: 'timestamp'
+    }
+    
+    # Verify required columns exist
+    missing_cols = [col for col in column_mapping.keys() if col not in event_log.columns]
+    if missing_cols:
+        raise KeyError(f"Missing required schema columns in dataset: {missing_cols}")
+        
+    # Rename and select standardized event log attributes
+    event_log = event_log.rename(columns=column_mapping)
+    
+    # Standardize data types
+    event_log['case_id'] = event_log['case_id'].astype(str)
+    event_log['activity'] = event_log['activity'].astype(str)
+    event_log['timestamp'] = pd.to_datetime(event_log['timestamp'], errors='coerce')
+    
+    print("--- Event Log Schema Summary ---")
+    print(f"Total Events: {len(event_log)}")
+    print(f"Unique Cases: {event_log['case_id'].nunique()}")
+    print(f"Unique Activities: {event_log['activity'].nunique()}")
+    
+    return event_log
