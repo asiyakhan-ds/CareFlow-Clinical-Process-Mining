@@ -87,3 +87,36 @@ def check_duplicates(df):
     print(f"Unique Activities: {event_log['activity'].nunique()}")
     
     return event_log
+
+    def format_timestamps(df, timestamp_col='timestamp', case_id_col='case_id'):
+    """
+    Parses and standardizes timestamp attributes:
+    - Converts raw values to datetime objects
+    - Handles missing or invalid timestamp entries
+    - Sorts events chronologically per case_id
+    """
+    event_log = df.copy()
+    
+    # Ensure timestamp column exists
+    if timestamp_col not in event_log.columns:
+        raise KeyError(f"Timestamp column '{timestamp_col}' not found in event log.")
+        
+    # Convert to datetime format
+    event_log[timestamp_col] = pd.to_datetime(event_log[timestamp_col], errors='coerce')
+    
+    # Remove records with missing/unparseable timestamps
+    initial_count = len(event_log)
+    event_log = event_log.dropna(subset=[timestamp_col])
+    dropped_count = initial_count - len(event_log)
+    
+    if dropped_count > 0:
+        print(f"Warning: Dropped {dropped_count} events due to invalid timestamps.")
+        
+    # Sort chronologically by case and timestamp
+    event_log = event_log.sort_values(by=[case_id_col, timestamp_col]).reset_index(drop=True)
+    
+    print(f"--- Timestamp Formatting Complete ---")
+    print(f"Earliest Event: {event_log[timestamp_col].min()}")
+    print(f"Latest Event:   {event_log[timestamp_col].max()}")
+    
+    return event_log
