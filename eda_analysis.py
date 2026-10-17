@@ -120,3 +120,29 @@ def check_duplicates(df):
     print(f"Latest Event:   {event_log[timestamp_col].max()}")
     
     return event_log
+
+    def standardize_activity_names(df, activity_col='activity', mapping_dict=None):
+    """
+    Standardizes and cleans clinical activity names in the event log:
+    - Strips leading/trailing whitespace and normalizes text casing
+    - Applies custom mapping dictionary if provided
+    """
+    event_log = df.copy()
+    
+    if activity_col not in event_log.columns:
+        raise KeyError(f"Activity column '{activity_col}' not found in event log.")
+        
+    # Clean whitespace and standardize baseline string format
+    event_log[activity_col] = event_log[activity_col].astype(str).str.strip()
+    
+    # Apply explicit activity mapping if provided
+    if mapping_dict:
+        event_log[activity_col] = event_log[activity_col].replace(mapping_dict)
+        
+    unique_activities = event_log[activity_col].unique()
+    
+    print(f"--- Activity Standardization Complete ---")
+    print(f"Total Unique Activities: {len(unique_activities)}")
+    print(f"Sample Activities: {list(unique_activities[:5])}")
+    
+    return event_log
