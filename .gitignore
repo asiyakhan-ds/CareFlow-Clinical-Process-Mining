@@ -34,3 +34,7 @@ dbt/dbt_packages/
 # OS
 .DS_Store
 Thumbs.db
+
+# Local installations and user-specific configuration
+/google-cloud-sdk/
+/dbt/.user.yml
