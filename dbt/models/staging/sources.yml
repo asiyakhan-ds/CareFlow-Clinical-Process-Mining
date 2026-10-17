@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: careflow
+    database: elegant-poetry-511603-n5
+    schema: careflow
+    tables:
+      - name: er_event_log

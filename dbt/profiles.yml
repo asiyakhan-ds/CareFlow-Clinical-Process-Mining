@@ -1,0 +1,11 @@
+﻿careflow:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: oauth
+      project: elegant-poetry-511603-n5
+      dataset: careflow_dbt_dev
+      location: US
+      threads: 4
+      priority: interactive
