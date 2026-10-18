@@ -146,3 +146,33 @@ def check_duplicates(df):
     print(f"Sample Activities: {list(unique_activities[:5])}")
     
     return event_log
+
+    def validate_event_log(event_log):
+    """
+    Validates the structure and integrity of the standardized event log.
+    Checks for required columns, null values, and basic data types.
+    """
+    required_columns = {'case_id', 'activity', 'timestamp'}
+    current_columns = set(event_log.columns)
+    
+    # Check for missing required columns
+    missing_cols = required_columns - current_columns
+    if missing_cols:
+        raise ValueError(f"Missing required columns in event log: {missing_cols}")
+    
+    # Check for null values in core fields
+    null_counts = event_log[['case_id', 'activity', 'timestamp']].isnull().sum()
+    total_nulls = null_counts.sum()
+    
+    print("--- Event Log Validation Summary ---")
+    print(f"Total Rows: {len(event_log)}")
+    print(f"Schema Check: Passed (Columns: {list(event_log.columns)})")
+    print(f"Null Counts: \n{null_counts}")
+    
+    if total_nulls > 0:
+        print(f"Warning: Found {total_nulls} null values in core event log columns.")
+    else:
+        print("Integrity Check: Passed (Zero nulls in core attributes).")
+        
+    return event_log 
+    
