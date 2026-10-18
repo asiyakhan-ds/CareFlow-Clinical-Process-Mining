@@ -1,0 +1,17 @@
+from_activity,to_activity,transition_count,avg_minutes_between
+Triage,Doctor Consultation,584,33.27
+Registration,Triage,500,32.23
+Treatment,Discharge,330,31.93
+Doctor Consultation,Lab Test,238,32.44
+Doctor Consultation,Treatment,233,32.71
+X-Ray,Treatment,142,32.11
+Treatment,Observation,126,34.29
+Lab Test,Treatment,125,30.86
+Observation,Discharge,108,28.84
+Lab Test,X-Ray,86,33.63
+Doctor Consultation,X-Ray,83,30.88
+Treatment,Admission,44,35.89
+Doctor Consultation,Triage,30,29.8
+Lab Test,Triage,27,40.41
+X-Ray,Triage,27,29.96
+Observation,Admission,18,22.89
