@@ -175,4 +175,25 @@ def check_duplicates(df):
         print("Integrity Check: Passed (Zero nulls in core attributes).")
         
     return event_log 
+
+    if __name__ == "__main__":
+    # Example execution pipeline for CareFlow event log standardization
+    import pandas as pd
+
+    print("--- Running Standardized Event-Log Pipeline ---")
+    
+    # 1. Load raw data (placeholder DataFrame)
+    raw_data = pd.DataFrame({
+        'Case_ID': [101, 102],
+        'Activity_Name': ['registration', 'triage'],
+        'Timestamp': ['2026-10-19 10:00:00', '2026-10-19 10:15:00']
+    })
+    
+    # 2. Execute pipeline functions
+    df_schema = prepare_event_log_schema(raw_data)
+    df_time = format_timestamps(df_schema)
+    df_clean = standardize_activity_names(df_time)
+    df_validated = validate_event_log(df_clean)
+    
+    print("\nPipeline execution complete!")
     
