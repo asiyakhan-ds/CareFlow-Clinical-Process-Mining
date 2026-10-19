@@ -1,0 +1,199 @@
+import pandas as pd
+import numpy as np
+
+def load_data(file_path):
+    """Load clinical pathway data from a CSV file."""
+    try:
+        df = pd.read_csv(file_path)
+        print(f"Data loaded successfully with shape: {df.shape}")
+        return df
+    except Exception as e:
+        print(f"Error loading file: {e}")
+        return None
+
+def inspect_dataset(df):
+    """Inspect dataset columns, data types, and sample records."""
+    if df is None:
+        print("No DataFrame to inspect.")
+        return
+    print("\n--- Dataset Info ---")
+    print(df.info())
+    print("\n--- First 5 Rows ---")
+    print(df.head())
+
+def check_missing_values(df):
+    """Check for missing values across columns."""
+    if df is None:
+        return
+    missing = df.isnull().sum()
+    print("\n--- Missing Values Count ---")
+    print(missing[missing > 0] if missing.sum() > 0 else "No missing values found.")
+    return missing
+
+if __name__ == "__main__":
+    data_path = "data/raw_data.csv"
+    df = load_data(data_path)
+    if df is not None:
+        inspect_dataset(df)
+        check_missing_values(df)
+        summary_statistics(df)
+        check_duplicates(df)
+
+def summary_statistics(df):
+    """Generate summary statistics for numerical columns."""
+    print("\n--- Summary Statistics ---")
+    print(df.describe())
+    return df.describe()
+
+def check_duplicates(df):
+    """Check and display duplicate rows in the dataset."""
+    duplicates = df.duplicated().sum()
+    print(f"\n--- Duplicate Rows ---")
+    print(f"Total duplicate rows: {duplicates}")
+    return duplicates
+
+    def prepare_event_log_schema(df, case_col='patient_id', activity_col='activity_name', timestamp_col='timestamp'):
+    """
+    Standardizes the dataset columns into process mining event log schema:
+    - case_id: Unique trace identifier for patient journey
+    - activity: Standardized event name
+    - timestamp: Datetime format for temporal ordering
+    """
+    event_log = df.copy()
+    
+    # Map raw columns to standardized schema
+    column_mapping = {
+        case_col: 'case_id',
+        activity_col: 'activity',
+        timestamp_col: 'timestamp'
+    }
+    
+    # Verify required columns exist
+    missing_cols = [col for col in column_mapping.keys() if col not in event_log.columns]
+    if missing_cols:
+        raise KeyError(f"Missing required schema columns in dataset: {missing_cols}")
+        
+    # Rename and select standardized event log attributes
+    event_log = event_log.rename(columns=column_mapping)
+    
+    # Standardize data types
+    event_log['case_id'] = event_log['case_id'].astype(str)
+    event_log['activity'] = event_log['activity'].astype(str)
+    event_log['timestamp'] = pd.to_datetime(event_log['timestamp'], errors='coerce')
+    
+    print("--- Event Log Schema Summary ---")
+    print(f"Total Events: {len(event_log)}")
+    print(f"Unique Cases: {event_log['case_id'].nunique()}")
+    print(f"Unique Activities: {event_log['activity'].nunique()}")
+    
+    return event_log
+
+    def format_timestamps(df, timestamp_col='timestamp', case_id_col='case_id'):
+    """
+    Parses and standardizes timestamp attributes:
+    - Converts raw values to datetime objects
+    - Handles missing or invalid timestamp entries
+    - Sorts events chronologically per case_id
+    """
+    event_log = df.copy()
+    
+    # Ensure timestamp column exists
+    if timestamp_col not in event_log.columns:
+        raise KeyError(f"Timestamp column '{timestamp_col}' not found in event log.")
+        
+    # Convert to datetime format
+    event_log[timestamp_col] = pd.to_datetime(event_log[timestamp_col], errors='coerce')
+    
+    # Remove records with missing/unparseable timestamps
+    initial_count = len(event_log)
+    event_log = event_log.dropna(subset=[timestamp_col])
+    dropped_count = initial_count - len(event_log)
+    
+    if dropped_count > 0:
+        print(f"Warning: Dropped {dropped_count} events due to invalid timestamps.")
+        
+    # Sort chronologically by case and timestamp
+    event_log = event_log.sort_values(by=[case_id_col, timestamp_col]).reset_index(drop=True)
+    
+    print(f"--- Timestamp Formatting Complete ---")
+    print(f"Earliest Event: {event_log[timestamp_col].min()}")
+    print(f"Latest Event:   {event_log[timestamp_col].max()}")
+    
+    return event_log
+
+    def standardize_activity_names(df, activity_col='activity', mapping_dict=None):
+    """
+    Standardizes and cleans clinical activity names in the event log:
+    - Strips leading/trailing whitespace and normalizes text casing
+    - Applies custom mapping dictionary if provided
+    """
+    event_log = df.copy()
+    
+    if activity_col not in event_log.columns:
+        raise KeyError(f"Activity column '{activity_col}' not found in event log.")
+        
+    # Clean whitespace and standardize baseline string format
+    event_log[activity_col] = event_log[activity_col].astype(str).str.strip()
+    
+    # Apply explicit activity mapping if provided
+    if mapping_dict:
+        event_log[activity_col] = event_log[activity_col].replace(mapping_dict)
+        
+    unique_activities = event_log[activity_col].unique()
+    
+    print(f"--- Activity Standardization Complete ---")
+    print(f"Total Unique Activities: {len(unique_activities)}")
+    print(f"Sample Activities: {list(unique_activities[:5])}")
+    
+    return event_log
+
+    def validate_event_log(event_log):
+    """
+    Validates the structure and integrity of the standardized event log.
+    Checks for required columns, null values, and basic data types.
+    """
+    required_columns = {'case_id', 'activity', 'timestamp'}
+    current_columns = set(event_log.columns)
+    
+    # Check for missing required columns
+    missing_cols = required_columns - current_columns
+    if missing_cols:
+        raise ValueError(f"Missing required columns in event log: {missing_cols}")
+    
+    # Check for null values in core fields
+    null_counts = event_log[['case_id', 'activity', 'timestamp']].isnull().sum()
+    total_nulls = null_counts.sum()
+    
+    print("--- Event Log Validation Summary ---")
+    print(f"Total Rows: {len(event_log)}")
+    print(f"Schema Check: Passed (Columns: {list(event_log.columns)})")
+    print(f"Null Counts: \n{null_counts}")
+    
+    if total_nulls > 0:
+        print(f"Warning: Found {total_nulls} null values in core event log columns.")
+    else:
+        print("Integrity Check: Passed (Zero nulls in core attributes).")
+        
+    return event_log 
+
+    if __name__ == "__main__":
+    # Example execution pipeline for CareFlow event log standardization
+    import pandas as pd
+
+    print("--- Running Standardized Event-Log Pipeline ---")
+    
+    # 1. Load raw data (placeholder DataFrame)
+    raw_data = pd.DataFrame({
+        'Case_ID': [101, 102],
+        'Activity_Name': ['registration', 'triage'],
+        'Timestamp': ['2026-10-19 10:00:00', '2026-10-19 10:15:00']
+    })
+    
+    # 2. Execute pipeline functions
+    df_schema = prepare_event_log_schema(raw_data)
+    df_time = format_timestamps(df_schema)
+    df_clean = standardize_activity_names(df_time)
+    df_validated = validate_event_log(df_clean)
+    
+    print("\nPipeline execution complete!")
+    
