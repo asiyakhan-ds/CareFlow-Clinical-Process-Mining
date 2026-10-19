@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: standardized_event_log
+    description: "Cleaned and standardized synthetic ER event log."
+    columns:
+      - name: case_id
+        description: "Identifier for an ER visit."
+        data_tests:
+          - not_null
+
+      - name: patient_id
+        description: "Identifier for a synthetic patient."
+        data_tests:
+          - not_null
+
+      - name: event_id
+        description: "Unique identifier for an event."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: activity
+        description: "ER activity recorded for the event."
+        data_tests:
+          - not_null
+
+      - name: event_timestamp
+        description: "Timestamp at which the event occurred."
+        data_tests:
+          - not_null
+
+      - name: event_sequence
+        description: "Sequence of the event within a visit."
+        data_tests:
+          - not_null
