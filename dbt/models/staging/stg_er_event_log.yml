@@ -1,0 +1,34 @@
+
+version: 2
+
+models:
+  - name: stg_er_event_log
+    description: >
+      Staging model for the synthetic emergency department event log.
+      Standardizes source column types and prepares event data for
+      downstream transformations.
+
+    columns:
+      - name: case_id
+        description: "Identifier for an emergency department visit."
+
+      - name: patient_id
+        description: "Identifier for the synthetic patient associated with a visit."
+
+      - name: event_id
+        description: "Identifier for an individual event in the event log."
+
+      - name: activity
+        description: "Activity recorded during the patient's visit."
+
+      - name: event_timestamp
+        description: "Timestamp associated with the recorded event."
+
+      - name: department
+        description: "Department associated with the recorded event."
+
+      - name: event_sequence
+        description: "Sequence number of the event within a visit."
+
+      - name: is_repeat
+        description: "Boolean flag indicating whether the event is marked as a repeat."
