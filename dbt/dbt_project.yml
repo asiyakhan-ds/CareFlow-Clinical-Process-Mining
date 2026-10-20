@@ -1,0 +1,15 @@
+name: 'careflow'
+version: '1.0.0'
+config-version: 2
+
+profile: 'careflow'
+
+model-paths: ['models']
+test-paths: ['tests']
+
+models:
+  careflow:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
