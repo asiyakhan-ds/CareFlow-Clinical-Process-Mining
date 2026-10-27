@@ -68,3 +68,9 @@ if __name__ == "__main__":
         plot_bottlenecks(bottleneck_summary)
     else:
         print(f"Data file not found at {data_path}. Please check the file path.")
+
+        
+# CareFlow Pathway Bottleneck Analysis Module
+# Calculates transition delays between clinical steps and identifies high-latency 
+# pathways to assist healthcare operations in resource allocation and workflow optimization.
+# Updated for daily process verification.
